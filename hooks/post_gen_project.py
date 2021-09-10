@@ -46,34 +46,6 @@ else:
 from invoke import Result, run, UnexpectedExit
 import requests
 
-# @contextmanager
-# def git_disable_gpgsign():
-#     """
-#     Disables git commit GPG signing temporarily.
-#     """
-#     try:
-#         result = run("git config --global --get commit.gpgSign", hide=True)
-#     # throws only on travis-ci. unknown reason
-#     except UnexpectedExit:
-
-#         class ResultNone:
-#             stdout = ""
-
-#         result = ResultNone()
-#     if result.stdout.strip() == "true":
-#         # turn off gpg signing commits
-#         try:
-#             run("git config --global --unset commit.gpgSign")
-#             yield
-#         # turn gpg signing back on
-#         except KeyboardInterrupt:
-#             run("git config --global --bool commit.gpgSign true")
-#         finally:
-#             run("git config --global --bool commit.gpgSign true")
-#     else:
-#         yield
-
-
 class PostGenProjectHook(object):
     """
     Post Project Generation Class Hook.
