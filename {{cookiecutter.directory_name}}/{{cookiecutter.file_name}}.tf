@@ -1,32 +1,32 @@
 resource "kubernetes_pod" "dummy_netapp" {
   metadata {
-    name = "dummy-netapp"
-    namespace = "evolved5g"
+    name = "{{cookiecutter.netapp_name}}"
+    namespace = "{{cookicutter.netapp_namespace}}"
     labels = {
-      app = "dummynetapp"
+      app = "{{cookiecutter.netapp_app}}"
     }
   }
 
   spec {
     container {
-      image = "dockerhub.hi.inet/evolved-5g/dummy-netapp:latest"
-      name  = "dummy-netapp"
+      image = "{{cookicutter.netapp_container_image}}"
+      name  = "{{cookicutter.netapp_container_name}}"
     }
   }
 }
 
 resource "kubernetes_service" "dummy_netapp_service" {
   metadata {
-    name = "dummy-netapp-service"
-    namespace = "evolved5g"
+    name = "{{cookicutter.netapp_service}}"
+    namespace = "{{cookiecutter.netapp_namespace}}"
   }
   spec {
     selector = {
-      app = kubernetes_pod.dummy_netapp.metadata.0.labels.app
+      app = {{cookicutter.netapp_service_app}}
     }
     port {
-      port = 8080
-      target_port = 8080
+      port = {{cookicutter.netapp_port}}
+      target_port = {{cookiecutter.netapp_target_port}}
     }
   }
 }
