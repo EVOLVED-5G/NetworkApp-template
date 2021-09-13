@@ -3,6 +3,7 @@
   "module_name": "Paula",
   "git_email": "paula.encinar.external@atos.net",
   "git_ignore": "windows,macos,linux,git",
+  
 
   "repo_slug": "terraform",
   "repo_tagline": "A cookiecutter-git demonstration :tada:",
@@ -12,6 +13,9 @@
   "remote_username": "pencinarsanz-atos",
   "remote_namespace": "{{ cookiecutter.remote_username }}",
   "token_repo": "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",
+
+  "add_collaborator": "yes or no",
+  "git_username_collaborator": "Paula-Encinar",
   
   "directory_name": "terraform",
   "file_name": "main",

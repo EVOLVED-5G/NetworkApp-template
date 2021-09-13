@@ -52,6 +52,7 @@ class PostGenProjectHook(object):
     """
     create_remote_url = None
     github_repos_url = "https://api.github.com/user/repos"
+    github_add_collaborator_url = "https://api.github.com/repos/pencinarsanz-atos/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
     payload = {"name": "{{cookiecutter.repo_slug}}","private":"true"}
@@ -190,11 +191,23 @@ class PostGenProjectHook(object):
             self.git_remote_add()
             self.git_push()
 
+    def add_collaborator_repo(self):
+        """
+
+        Add collaborator is optional
+
+        """
+        # if {{cookiecutter.add_collaborator}} == 'yes': 
+        r1 = requests.put(self.github_add_collaborator_url,headers=self.head)
+        print (r1)
+
+
     def run(self):
         """
         Sets up the project dirs, and git repo.
         """
         self.git_repo()
+        self.add_collaborator_repo()
         print(self.success_message)
 
 
