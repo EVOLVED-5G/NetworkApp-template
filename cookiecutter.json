@@ -10,7 +10,7 @@
   "remote_provider": "github.com",
   "remote_username": "pencinarsanz-atos",
   "remote_namespace": "{{ cookiecutter.remote_username }}",
-  "token_repo": "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",
+  "token_repo": "your token",
 
   "add_collaborator": "yes or no",
   "git_username_collaborator": "Paula-Encinar",
