@@ -2,10 +2,8 @@
   "git_name": "Paula Encinar",
   "module_name": "Paula",
   "git_email": "paula.encinar.external@atos.net",
-  "git_ignore": "windows,macos,linux,git",
-  
 
-  "repo_slug": "terraform",
+  "repo_slug": "MyNetApp",
   "repo_tagline": "A cookiecutter-git demonstration :tada:",
   "repo_summary": "This project ...",
 
@@ -17,9 +15,6 @@
   "add_collaborator": "yes or no",
   "git_username_collaborator": "Paula-Encinar",
   
-  "directory_name": "terraform",
-  "file_name": "main",
-
   "netapp_name": "dummy-netapp",
   "netapp_namespace": "evolved5g",
   "netapp_app": "dummynetapp",
