@@ -126,20 +126,13 @@ class PostGenProjectHook(object):
         print("He pasado por aqui")
 
     @staticmethod
-    def git_commit(message="Initial commit"):
+    def git_commit():
         """
-        Runs git commit with an initial message.
+        Runs git commit.
 
-        :param message:
         """
-        command = "git commit --message {}".format(quote(message))
-        if os.name == "nt":
-            # See https://github.com/NathanUrwin/cookiecutter-git/issues/43
-            with git_disable_gpgsign():
-                run(command)
-        else:
-            # `git commit -m "Initial commit"`
-            run(command)
+        command = "git commit -m 'Creation of a new NetApp {{cookiecutter.netapp_name}}'"
+        run(command)
 
     @staticmethod
     def _get_cookiecutter_result():
@@ -193,9 +186,7 @@ class PostGenProjectHook(object):
 
     def add_collaborator_repo(self):
         """
-
         Add collaborator is optional
-
         """
         # if {{cookiecutter.add_collaborator}} == 'yes': 
         r1 = requests.put(self.github_add_collaborator_url,headers=self.head)

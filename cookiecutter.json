@@ -16,13 +16,13 @@
   "add_collaborator": "yes or no",
   "git_username_collaborator": "Paula-Encinar",
   
-  "netapp_name": "dummy-netapp",
+  "netapp_name": "example-netapp",
   "netapp_namespace": "evolved5g",
-  "netapp_app": "dummynetapp",
+  "netapp_app": "example",
   "netapp_container_image": "dockerhub.hi.inet/evolved-5g/dummy-netapp:latest",
-  "netapp_container_name": "dummy-netapp",
-  "netapp_service": "dummy-netapp-service",
-  "netapp_service_app": "kubernetes_pod.dummy_netapp.metadata.0.labels.app",
+  "netapp_container_name": "example-netapp",
+  "netapp_service": "example-netapp-service",
+  "netapp_service_app": "kubernetes_pod.example.metadata.0.labels.app",
   "netapp_port": "8080",
   "netapp_target_port": "8080"
 
