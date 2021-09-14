@@ -51,7 +51,7 @@ class PostGenProjectHook(object):
     Post Project Generation Class Hook.
     """
     create_remote_url = None
-    github_repos_url = "https://api.github.com/user/repos"
+    github_repos_url = "https://api.github.com/orgs/:EVOLVED-5G/repos"
     github_add_collaborator_url = "https://api.github.com/repos/pencinarsanz-atos/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
