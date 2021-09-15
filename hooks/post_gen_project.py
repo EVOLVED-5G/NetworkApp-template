@@ -78,6 +78,7 @@ class PostGenProjectHook(object):
         self.git_name = self.result.get("git_name")
         self.make_dirs = self.result.get("make_dirs")
         self.remote_namespace = self.result.get("remote_namespace")
+        self.remote_username_organization = self.result.get("remote_username_organization")
         self.remote_protocol = self.result.get("remote_protocol")
         self.remote_provider = str(self.result.get("remote_provider")).lower()
         self.remote_username = self.result.get("remote_username")
@@ -92,7 +93,7 @@ class PostGenProjectHook(object):
         self.remote_repo = self.remote_provider != "none"
         self.remote_message = (
             self.remote_message_base.format(
-                self.remote_provider, self.remote_namespace, self.repo_slug
+                self.remote_provider, self.remote_username_organization, self.repo_slug
             )
             if self.remote_repo
             else ""
@@ -106,7 +107,7 @@ class PostGenProjectHook(object):
         Creates a remote repo 
         """
         r = requests.post(self.github_repos_url,headers=self.head, json=self.payload)
-        print("repo creado", r)
+        print("Repository created", r)
 
 
     @staticmethod
@@ -123,7 +124,6 @@ class PostGenProjectHook(object):
         """
         # `git add -A`
         run("git add --all")
-        print("He pasado por aqui")
 
     @staticmethod
     def git_commit():
@@ -190,7 +190,7 @@ class PostGenProjectHook(object):
         """
         # if {{cookiecutter.add_collaborator}} == 'yes': 
         r1 = requests.put(self.github_add_collaborator_url,headers=self.head)
-        print (r1)
+        #print (r1)
 
 
     def run(self):
