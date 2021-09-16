@@ -1,4 +1,4 @@
-resource "kubernetes_pod" "dummy_netapp" {
+resource "kubernetes_pod" "{{cookiecutter.netapp_name}}" {
   metadata {
     name = "{{cookiecutter.netapp_name}}"
     namespace = "{{cookiecutter.netapp_namespace}}"
@@ -15,7 +15,7 @@ resource "kubernetes_pod" "dummy_netapp" {
   }
 }
 
-resource "kubernetes_service" "dummy_netapp_service" {
+resource "kubernetes_service" "{{cookiecutter.netapp_name}}_service" {
   metadata {
     name = "{{cookiecutter.netapp_service}}"
     namespace = "{{cookiecutter.netapp_namespace}}"
