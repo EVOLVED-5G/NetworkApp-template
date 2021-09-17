@@ -52,7 +52,7 @@ class PostGenProjectHook(object):
     """
     create_remote_url = None
     github_repos_url = "https://api.github.com/orgs/EVOLVED-5G/repos"
-    github_add_collaborator_url = "https://api.github.com/repos/pencinarsanz-atos/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
+    github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
     payload = {"name": "{{cookiecutter.repo_slug}}","private":"true"}
@@ -190,7 +190,8 @@ class PostGenProjectHook(object):
         """
         # if {{cookiecutter.add_collaborator}} == 'yes': 
         r1 = requests.put(self.github_add_collaborator_url,headers=self.head)
-        #print (r1)
+        print ("Contributor added",r1)
+
 
 
     def run(self):
