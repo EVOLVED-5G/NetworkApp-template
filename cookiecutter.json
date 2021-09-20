@@ -13,6 +13,7 @@
   "token_repo": "your token",
 
   "add_collaborator": "yes",
+  "collaborator_permissions": "read",
   "git_username_collaborator": "Paula-Encinar",
   
   "netapp_name": "example-netapp",

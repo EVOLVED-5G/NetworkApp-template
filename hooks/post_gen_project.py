@@ -45,6 +45,7 @@ else:
 
 from invoke import Result, run, UnexpectedExit
 import requests
+import json
 
 class PostGenProjectHook(object):
     """
@@ -55,7 +56,8 @@ class PostGenProjectHook(object):
     github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
-    payload = {"name": "{{cookiecutter.repo_slug}}","private":"true"}
+    payload_create_repo = {"name": "{{cookiecutter.repo_slug}}","private":"true"}
+    payload_permission_collaborator = {"permissions": "{{cookiecutter.collaborator_permissions}}"}
     remote_message_base = "Also see: https://{}/{}/{}"
     success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\nThanks for using cookiecutter-git! :)\n\n"
     repo_dirpath = os.getcwd()
@@ -86,6 +88,7 @@ class PostGenProjectHook(object):
         self.repo_summary = self.result.get("repo_summary")
         self.repo_tagline = self.result.get("repo_tagline")
         self.add_collaborator = self.result.get("add_collaborator")
+        self.collaborator_permissions = self.result.get("collaborator_permissions")
         self.remote_data = {
             "name": self.repo_slug,
             "description": self.repo_tagline,
@@ -104,7 +107,7 @@ class PostGenProjectHook(object):
         """
         Creates a remote repo 
         """
-        r = requests.post(self.github_repos_url,headers=self.head, json=self.payload)
+        r = requests.post(self.github_repos_url,headers=self.head, json=self.payload_create_repo)
         print("Repository created", r)
 
 
@@ -186,10 +189,23 @@ class PostGenProjectHook(object):
         Add collaborator is optional
         """
         if self.add_collaborator == 'yes': 
-            r1 = requests.put(self.github_add_collaborator_url,headers=self.head)
-            print ("Contributor added",r1)
+            response = requests.put(self.github_add_collaborator_url,headers=self.head)
+            response.raise_for_status()
+            payload = response.json()
+            X = json.dumps(payload)
+            print ("json:",X)
+            print ("Contributor added",response)
+            invited_id = json.loads (X)
+            
+            git_id_invited_collaborator = invited_id['id']
 
+            if self.collaborator_permissions != 'write':
+                git_url_permission_collaborator = f"https://api.github.com/repos/EVOLVED-5G/MyNetApp/invitations/{git_id_invited_collaborator}"
+                print(git_url_permission_collaborator)
 
+                response_permission = requests.patch (git_url_permission_collaborator, headers=self.head, json=self.payload_permission_collaborator)
+                print (response_permission)
+                print("Collaborator with permission of", self.collaborator_permissions)
 
     def run(self):
         """
