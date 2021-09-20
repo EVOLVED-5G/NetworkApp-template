@@ -85,6 +85,7 @@ class PostGenProjectHook(object):
         self.repo_slug = self.result.get("repo_slug")
         self.repo_summary = self.result.get("repo_summary")
         self.repo_tagline = self.result.get("repo_tagline")
+        self.add_collaborator = self.result.get("add_collaborator")
         self.remote_data = {
             "name": self.repo_slug,
             "description": self.repo_tagline,
@@ -184,9 +185,9 @@ class PostGenProjectHook(object):
         """
         Add collaborator is optional
         """
-        # if {{cookiecutter.add_collaborator}} == 'yes': 
-        r1 = requests.put(self.github_add_collaborator_url,headers=self.head)
-        print ("Contributor added",r1)
+        if self.add_collaborator == 'yes': 
+            r1 = requests.put(self.github_add_collaborator_url,headers=self.head)
+            print ("Contributor added",r1)
 
 
 
