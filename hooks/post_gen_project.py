@@ -80,7 +80,7 @@ class PostGenProjectHook(object):
         self.remote_namespace = self.result.get("remote_namespace")
         self.remote_username_organization = self.result.get("remote_username_organization")
         self.remote_protocol = self.result.get("remote_protocol")
-        self.remote_provider = str(self.result.get("remote_provider")).lower()
+        self.remote_provider = "github.com"
         self.remote_username = self.result.get("remote_username")
         self.repo_slug = self.result.get("repo_slug")
         self.repo_summary = self.result.get("repo_summary")
@@ -90,13 +90,10 @@ class PostGenProjectHook(object):
             "description": self.repo_tagline,
         }
 
-        self.remote_repo = self.remote_provider != "none"
         self.remote_message = (
             self.remote_message_base.format(
                 self.remote_provider, self.remote_username_organization, self.repo_slug
             )
-            if self.remote_repo
-            else ""
         )
         self.success_message = self.success_message_base.format(
             self.repo_dirpath, self.remote_message
@@ -179,10 +176,9 @@ class PostGenProjectHook(object):
         self.git_init()
         self.git_add()
         self.git_commit()
-        if self.remote_repo:
-            self.git_create_remote_repo()
-            self.git_remote_add()
-            self.git_push()
+        self.git_create_remote_repo()
+        self.git_remote_add()
+        self.git_push()
 
     def add_collaborator_repo(self):
         """

@@ -7,13 +7,12 @@
   "repo_tagline": "A cookiecutter-git demonstration :tada:",
   "repo_summary": "This project ...",
 
-  "remote_provider": "github.com",
   "remote_username": "pencinarsanz-atos",
   "remote_username_organization": "EVOLVED-5G",
   "remote_namespace": "{{ cookiecutter.remote_username }}",
   "token_repo": "your token",
 
-  "add_collaborator": "yes or no",
+  "add_collaborator": "yes",
   "git_username_collaborator": "Paula-Encinar",
   
   "netapp_name": "example-netapp",
