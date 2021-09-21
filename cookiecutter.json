@@ -3,7 +3,7 @@
   "module_name": "Paula",
   "git_email": "paula.encinar.external@atos.net",
 
-  "repo_slug": "MyNetApp",
+  "repo_name": "MyNetApp",
   "repo_tagline": "A cookiecutter-git demonstration :tada:",
   "repo_summary": "This project ...",
 

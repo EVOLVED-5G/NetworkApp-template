@@ -13,10 +13,10 @@ class PostGenProjectHook(object):
     Post Project Generation Class Hook.
     """
     github_repos_url = "https://api.github.com/orgs/EVOLVED-5G/repos"
-    github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
+    github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_name}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
-    payload_create_repo = {"name": "{{cookiecutter.repo_slug}}","private":"true"}
+    payload_create_repo = {"name": "{{cookiecutter.repo_name}}","private":"true"}
     payload_permission_collaborator = {"permissions": "{{cookiecutter.collaborator_permissions}}"}
     remote_message_base = "Also see: https://{}/{}/{}"
     success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\nThanks for using cookiecutter-git! :)\n\n"
@@ -24,8 +24,8 @@ class PostGenProjectHook(object):
     cookiecutter_json_filepath = os.path.join(
         repo_dirpath, "cookiecutter.json"
     )
-    raw_repo_slug_dirpath = os.path.join(
-        repo_dirpath, "{% raw %}{{cookiecutter.repo_slug}}{% endraw %}"
+    raw_repo_name_dirpath = os.path.join(
+        repo_dirpath, "{% raw %}{{cookiecutter.repo_name}}{% endraw %}"
     )
     github_dirpath = os.path.join(repo_dirpath, ".github")
     hooks_dirpath = os.path.join(repo_dirpath, "hooks")
@@ -44,19 +44,19 @@ class PostGenProjectHook(object):
         self.remote_protocol = self.result.get("remote_protocol")
         self.remote_provider = "github.com"
         self.remote_username = self.result.get("remote_username")
-        self.repo_slug = self.result.get("repo_slug")
+        self.repo_name = self.result.get("repo_name")
         self.repo_summary = self.result.get("repo_summary")
         self.repo_tagline = self.result.get("repo_tagline")
         self.add_collaborator = self.result.get("add_collaborator")
         self.collaborator_permissions = self.result.get("collaborator_permissions")
         self.remote_data = {
-            "name": self.repo_slug,
+            "name": self.repo_name,
             "description": self.repo_tagline,
         }
 
         self.remote_message = (
             self.remote_message_base.format(
-                self.remote_provider, self.remote_username_organization, self.repo_slug
+                self.remote_provider, self.remote_username_organization, self.repo_name
             )
         )
         self.success_message = self.success_message_base.format(
@@ -119,7 +119,7 @@ class PostGenProjectHook(object):
         """
         Adds the git remote origin url with included password.
         """
-        command = "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_slug}}.git"
+        command = "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_name}}.git"
         run(command)
 
     def git_push(self):
