@@ -123,14 +123,12 @@ class PostGenProjectHook(object):
         """
         Runs git add all.
         """
-        # `git add -A`
         run("git add --all")
 
     @staticmethod
     def git_commit():
         """
         Runs git commit.
-
         """
         command = "git commit -m 'Creation of a new NetApp {{cookiecutter.netapp_name}}'"
         run(command)
@@ -140,10 +138,8 @@ class PostGenProjectHook(object):
         """
         Removes as much jinja2 templating from the hook as possible.
         """
-        # http://flask.pocoo.org/docs/latest/templating/#standard-filters
         try:
             result = json.loads("""{{ cookiecutter | tojson() }}""")
-        # current temp hack around for `pipenv run pytest -s`
         except json.JSONDecodeError:
             result = {}
             repo_dirpath = os.path.dirname(
@@ -170,7 +166,6 @@ class PostGenProjectHook(object):
         Pushes the git remote and sets as upstream.
         """
         command = "git push -u origin master"
-
         run(command)
 
     def git_repo(self):
