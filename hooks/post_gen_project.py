@@ -18,30 +18,30 @@ import os
 import requests
 import shutil
 
-# if os.name == "nt":
+if os.name == "nt":
 
-#     def quote(arg):
-#         # https://stackoverflow.com/a/29215357
-#         if re.search(r'(["\s])', arg):
-#             arg = '"' + arg.replace('"', r"\"") + '"'
-#         meta_chars = '()%!^"<>&|'
-#         meta_re = re.compile(
-#             "(" + "|".join(re.escape(char) for char in list(meta_chars)) + ")"
-#         )
-#         meta_map = {char: "^%s" % char for char in meta_chars}
+    def quote(arg):
+        # https://stackoverflow.com/a/29215357
+        if re.search(r'(["\s])', arg):
+            arg = '"' + arg.replace('"', r"\"") + '"'
+        meta_chars = '()%!^"<>&|'
+        meta_re = re.compile(
+            "(" + "|".join(re.escape(char) for char in list(meta_chars)) + ")"
+        )
+        meta_map = {char: "^%s" % char for char in meta_chars}
 
-#         def escape_meta_chars(m):
-#             char = m.group(1)
-#             return meta_map[char]
+        def escape_meta_chars(m):
+            char = m.group(1)
+            return meta_map[char]
 
-#         return meta_re.sub(escape_meta_chars, arg)
+        return meta_re.sub(escape_meta_chars, arg)
 
 
-# else:
-#     try:  # py34, py35, py36, py37
-#         from shlex import quote
-#     except ImportError:  # py27
-#         from pipes import quote
+else:
+    try:  # py34, py35, py36, py37
+        from shlex import quote
+    except ImportError:  # py27
+        from pipes import quote
 
 from invoke import Result, run, UnexpectedExit
 import requests
