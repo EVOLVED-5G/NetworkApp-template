@@ -19,7 +19,7 @@ class PostGenProjectHook(object):
     payload_create_repo = {"name": "{{cookiecutter.repo_name}}","private":"true"}
     payload_permission_collaborator = {"permissions": "{{cookiecutter.collaborator_permissions}}"}
     remote_message_base = "Also see: https://{}/{}/{}"
-    success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\nThanks for using cookiecutter-git! :)\n\n"
+    success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\n"
     repo_dirpath = os.getcwd()
     cookiecutter_json_filepath = os.path.join(
         repo_dirpath, "cookiecutter.json"
@@ -155,7 +155,7 @@ class PostGenProjectHook(object):
             git_id_invited_collaborator = invited_id['id']
 
             if self.collaborator_permissions != 'write':
-                git_url_permission_collaborator = f"https://api.github.com/repos/EVOLVED-5G/MyNetApp/invitations/{git_id_invited_collaborator}"
+                git_url_permission_collaborator = f"https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_name}}/invitations/{git_id_invited_collaborator}"
                 print(git_url_permission_collaborator)
 
                 response_permission = requests.patch (git_url_permission_collaborator, headers=self.head, json=self.payload_permission_collaborator)
