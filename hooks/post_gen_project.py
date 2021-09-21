@@ -18,30 +18,30 @@ import os
 import requests
 import shutil
 
-# if os.name == "nt":
+if os.name == "nt":
 
-#     def quote(arg):
-#         # https://stackoverflow.com/a/29215357
-#         if re.search(r'(["\s])', arg):
-#             arg = '"' + arg.replace('"', r"\"") + '"'
-#         meta_chars = '()%!^"<>&|'
-#         meta_re = re.compile(
-#             "(" + "|".join(re.escape(char) for char in list(meta_chars)) + ")"
-#         )
-#         meta_map = {char: "^%s" % char for char in meta_chars}
+    def quote(arg):
+        # https://stackoverflow.com/a/29215357
+        if re.search(r'(["\s])', arg):
+            arg = '"' + arg.replace('"', r"\"") + '"'
+        meta_chars = '()%!^"<>&|'
+        meta_re = re.compile(
+            "(" + "|".join(re.escape(char) for char in list(meta_chars)) + ")"
+        )
+        meta_map = {char: "^%s" % char for char in meta_chars}
 
-#         def escape_meta_chars(m):
-#             char = m.group(1)
-#             return meta_map[char]
+        def escape_meta_chars(m):
+            char = m.group(1)
+            return meta_map[char]
 
-#         return meta_re.sub(escape_meta_chars, arg)
+        return meta_re.sub(escape_meta_chars, arg)
 
 
-# else:
-#     try:  # py34, py35, py36, py37
-#         from shlex import quote
-#     except ImportError:  # py27
-#         from pipes import quote
+else:
+    try:  # py34, py35, py36, py37
+        from shlex import quote
+    except ImportError:  # py27
+        from pipes import quote
 
 from invoke import Result, run, UnexpectedExit
 import requests
@@ -116,21 +116,21 @@ class PostGenProjectHook(object):
         """
         Runs git init.
         """
-        command = "git init"
-        run(command)
+        run("git init")
 
     @staticmethod
     def git_add():
         """
         Runs git add all.
         """
-        command = "git add --all"
-        run(command)
+        # `git add -A`
+        run("git add --all")
 
     @staticmethod
     def git_commit():
         """
         Runs git commit.
+
         """
         command = "git commit -m 'Creation of a new NetApp {{cookiecutter.netapp_name}}'"
         run(command)
@@ -140,6 +140,7 @@ class PostGenProjectHook(object):
         """
         Removes as much jinja2 templating from the hook as possible.
         """
+        # http://flask.pocoo.org/docs/latest/templating/#standard-filters
         try:
             result = json.loads("""{{ cookiecutter | tojson() }}""")
         # current temp hack around for `pipenv run pytest -s`
@@ -156,12 +157,13 @@ class PostGenProjectHook(object):
                         result[k] = v[0]
         return result
 
-    def git_add(self):
+    def git_remote_add(self):
         """
         Adds the git remote origin url with included password.
         """
-        command = "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_slug}}.git"
-        run(command)
+        run(
+            "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_slug}}.git"
+        )
 
     def git_push(self):
         """
@@ -179,7 +181,7 @@ class PostGenProjectHook(object):
         self.git_add()
         self.git_commit()
         self.git_create_remote_repo()
-        self.git_add()
+        self.git_remote_add()
         self.git_push()
 
     def add_collaborator_repo(self):
@@ -191,6 +193,7 @@ class PostGenProjectHook(object):
             response.raise_for_status()
             payload = response.json()
             X = json.dumps(payload)
+            print ("json:",X)
             print ("Contributor added",response)
             invited_id = json.loads (X)
             
@@ -219,5 +222,7 @@ def main():
     """
     PostGenProjectHook().run()
 
+
+# This is required! Don't remove!!
 if __name__ == "__main__":
     main()
