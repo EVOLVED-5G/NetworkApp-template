@@ -1,57 +1,17 @@
-# -*- coding: utf-8 -*-
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-
 """
 Cookiecutter-Git Post Project Generation Hook Module.
 """
-import base64
-from contextlib import contextmanager
-import errno
-import getpass
 import json
 import os
 import requests
-import shutil
-
-if os.name == "nt":
-
-    def quote(arg):
-        # https://stackoverflow.com/a/29215357
-        if re.search(r'(["\s])', arg):
-            arg = '"' + arg.replace('"', r"\"") + '"'
-        meta_chars = '()%!^"<>&|'
-        meta_re = re.compile(
-            "(" + "|".join(re.escape(char) for char in list(meta_chars)) + ")"
-        )
-        meta_map = {char: "^%s" % char for char in meta_chars}
-
-        def escape_meta_chars(m):
-            char = m.group(1)
-            return meta_map[char]
-
-        return meta_re.sub(escape_meta_chars, arg)
-
-
-else:
-    try:  # py34, py35, py36, py37
-        from shlex import quote
-    except ImportError:  # py27
-        from pipes import quote
 
 from invoke import Result, run, UnexpectedExit
-import requests
-import json
+
 
 class PostGenProjectHook(object):
     """
     Post Project Generation Class Hook.
     """
-    create_remote_url = None
     github_repos_url = "https://api.github.com/orgs/EVOLVED-5G/repos"
     github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_slug}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
@@ -116,14 +76,16 @@ class PostGenProjectHook(object):
         """
         Runs git init.
         """
-        run("git init")
+        command = "git init"
+        run(command)
 
     @staticmethod
     def git_add():
         """
         Runs git add all.
         """
-        run("git add --all")
+        command = "git add --all"
+        run(command)
 
     @staticmethod
     def git_commit():
@@ -157,9 +119,8 @@ class PostGenProjectHook(object):
         """
         Adds the git remote origin url with included password.
         """
-        run(
-            "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_slug}}.git"
-        )
+        command = "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_slug}}.git"
+        run(command)
 
     def git_push(self):
         """
@@ -188,7 +149,6 @@ class PostGenProjectHook(object):
             response.raise_for_status()
             payload = response.json()
             X = json.dumps(payload)
-            print ("json:",X)
             print ("Contributor added",response)
             invited_id = json.loads (X)
             
