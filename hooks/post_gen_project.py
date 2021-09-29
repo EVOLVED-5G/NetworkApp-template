@@ -27,7 +27,6 @@ class PostGenProjectHook(object):
     raw_repo_name_dirpath = os.path.join(
         repo_dirpath, "{% raw %}{{cookiecutter.repo_name}}{% endraw %}"
     )
-    github_dirpath = os.path.join(repo_dirpath, ".github")
     hooks_dirpath = os.path.join(repo_dirpath, "hooks")
 
     def __init__(self, *args, **kwargs):
