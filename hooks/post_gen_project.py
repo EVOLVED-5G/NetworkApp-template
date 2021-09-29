@@ -37,7 +37,6 @@ class PostGenProjectHook(object):
         self.result = self._get_cookiecutter_result()
         self.git_ignore = self.result.get("git_ignore")
         self.make_dirs = self.result.get("make_dirs")
-        self.remote_protocol = self.result.get("remote_protocol")
         self.remote_provider = "github.com"
         self.repo_name = self.result.get("repo_name")
         self.add_collaborator = self.result.get("add_collaborator")
