@@ -1,15 +1,8 @@
 {
-  "git_name": "Paula Encinar",
-  "module_name": "Paula",
-  "git_email": "paula.encinar.external@atos.net",
+  "git_email": "paula.encinar@atos.net",
 
   "repo_name": "MyNetApp",
-  "repo_tagline": "A cookiecutter-git demonstration :tada:",
-  "repo_summary": "This project ...",
-
   "remote_username": "pencinarsanz-atos",
-  "remote_username_organization": "EVOLVED-5G",
-  "remote_namespace": "{{ cookiecutter.remote_username }}",
   "token_repo": "your token",
 
   "add_collaborator": "yes",

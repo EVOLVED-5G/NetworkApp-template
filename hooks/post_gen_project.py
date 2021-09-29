@@ -35,28 +35,16 @@ class PostGenProjectHook(object):
         Initializes the class instance.
         """
         self.result = self._get_cookiecutter_result()
-        self.git_email = self.result.get("git_email")
         self.git_ignore = self.result.get("git_ignore")
-        self.git_name = self.result.get("git_name")
         self.make_dirs = self.result.get("make_dirs")
-        self.remote_namespace = self.result.get("remote_namespace")
-        self.remote_username_organization = self.result.get("remote_username_organization")
         self.remote_protocol = self.result.get("remote_protocol")
         self.remote_provider = "github.com"
-        self.remote_username = self.result.get("remote_username")
         self.repo_name = self.result.get("repo_name")
-        self.repo_summary = self.result.get("repo_summary")
-        self.repo_tagline = self.result.get("repo_tagline")
         self.add_collaborator = self.result.get("add_collaborator")
         self.collaborator_permissions = self.result.get("collaborator_permissions")
-        self.remote_data = {
-            "name": self.repo_name,
-            "description": self.repo_tagline,
-        }
-
         self.remote_message = (
             self.remote_message_base.format(
-                self.remote_provider, self.remote_username_organization, self.repo_name
+                self.remote_provider, "EVOLVED-5G", self.repo_name
             )
         )
         self.success_message = self.success_message_base.format(
@@ -119,7 +107,7 @@ class PostGenProjectHook(object):
         """
         Adds the git remote origin url with included password.
         """
-        command = "git remote add origin git@github.com:{{cookiecutter.remote_username_organization}}/{{cookiecutter.repo_name}}.git"
+        command = "git remote add origin git@github.com:EVOLVED-5G/{{cookiecutter.repo_name}}.git"
         run(command)
 
     def git_push(self):
