@@ -16,7 +16,7 @@ class PostGenProjectHook(object):
     github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_name}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
-    payload_create_repo = {"name": "{{cookiecutter.repo_name}}","private":"true"}
+    payload_create_repo = {"name": "{{cookiecutter.repo_name}}", "public": "true"}
     payload_permission_collaborator = {"permissions": "{{cookiecutter.collaborator_permissions}}"}
     remote_message_base = "Also see: https://{}/{}/{}"
     success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\n"
