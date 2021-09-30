@@ -9,7 +9,7 @@ resource "kubernetes_pod" "{{cookiecutter.netapp_name}}" {
 
   spec {
     container {
-      image = "{{cookiecutter.netapp_container_image}}"
+      image = "dockerhub.hi.inet/evolved-5g/{{cookiecutter.netapp_name}}:latest"
       name  = "{{cookiecutter.netapp_container_name}}"
     }
   }

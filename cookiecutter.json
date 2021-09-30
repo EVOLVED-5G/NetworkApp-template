@@ -12,7 +12,6 @@
   "netapp_name": "example-netapp",
   "netapp_namespace": "evolved5g",
   "netapp_app": "example",
-  "netapp_container_image": "dockerhub.hi.inet/evolved-5g/dummy-netapp:latest",
   "netapp_container_name": "example-netapp",
   "netapp_service": "example-netapp-service",
   "netapp_service_app": "kubernetes_pod.example.metadata.0.labels.app",
