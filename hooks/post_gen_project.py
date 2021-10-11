@@ -115,6 +115,13 @@ class PostGenProjectHook(object):
         command = "git push -u origin master"
         run(command)
 
+    def git_checkout(self):
+        """
+        create new branch about master
+        :return:
+        """
+        command = "git checkout -b evolved5g"
+
     def git_repo(self):
         """
         Adds a .gitignore, initial commit, and remote repo.
@@ -125,6 +132,7 @@ class PostGenProjectHook(object):
         self.git_create_remote_repo()
         self.git_remote_add()
         self.git_push()
+        self.git_checkout()
 
     def add_collaborator_repo(self):
         """
