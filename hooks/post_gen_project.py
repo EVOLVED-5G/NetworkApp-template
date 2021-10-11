@@ -121,6 +121,7 @@ class PostGenProjectHook(object):
         :return:
         """
         command = "git checkout -b evolved5g"
+        run(command)
 
     def git_repo(self):
         """
