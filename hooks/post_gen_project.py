@@ -121,7 +121,6 @@ class PostGenProjectHook(object):
         """
         command = "git checkout -b evolved5g"
         run(command)
-        print("Checkout -b evolved5g")
 
     def git_push_evolved5g(self):
         """
