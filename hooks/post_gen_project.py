@@ -78,7 +78,7 @@ class PostGenProjectHook(object):
         """
         Runs git commit.
         """
-        command = "git commit -m 'Creation of a new NetApp {{cookiecutter.netapp_name}}'"
+        command = "git commit -m \"Creation of a new NetApp {{cookiecutter.netapp_name}}\""
         run(command)
 
     @staticmethod
