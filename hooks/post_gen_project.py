@@ -118,10 +118,10 @@ class PostGenProjectHook(object):
     def git_checkout(self):
         """
         create new branch about master
-        :return:
         """
         command = "git checkout -b evolved5g"
         run(command)
+        print("Checkout -b evolved5g")
 
     def git_repo(self):
         """
