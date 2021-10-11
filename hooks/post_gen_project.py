@@ -123,6 +123,13 @@ class PostGenProjectHook(object):
         run(command)
         print("Checkout -b evolved5g")
 
+    def git_push_evolved5g(self):
+        """
+        Push branch evolved5g
+        """
+        command = "git push -u origin evolved5g"
+        run(command)
+
     def git_repo(self):
         """
         Adds a .gitignore, initial commit, and remote repo.
@@ -134,6 +141,7 @@ class PostGenProjectHook(object):
         self.git_remote_add()
         self.git_push()
         self.git_checkout()
+        self.git_push_evolved5g()
 
     def add_collaborator_repo(self):
         """
