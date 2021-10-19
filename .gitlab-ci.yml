@@ -55,7 +55,7 @@ test_functional:
   dependencies:
     - adapt_wheel
   script:
-    - echo "Installing atoselicense in develop mode for coverage purpose"
+    - echo "Installing template in develop mode for coverage purpose"
     - rm -f .env
     - touch .env
     - echo "USER_PASSWORD="$API_TOKEN >> .env  # To install sns.manowrappers from develop branch
