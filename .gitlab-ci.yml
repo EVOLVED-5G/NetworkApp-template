@@ -61,13 +61,13 @@ test_functional:
     - echo "USER_PASSWORD="$API_TOKEN >> .env  # To install sns.manowrappers from develop branch
     - apt-get update
     - apt-get install git -y --no-install-recommends  # TODO: Remove when sns-manowrappers 1.1.0 is released
-    - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
-    - cp -r htmlcov reports
+#    - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
+#   - cp -r htmlcov reports
   coverage: '/TOTAL.+?(\d+%)/'
 
   artifacts:
     paths:
-      - reports/htmlcov
+#      - reports/htmlcov
 
 qa:
   stage: tests
@@ -84,11 +84,11 @@ qa:
     - pylint $PACKAGE tests --exit-zero --reports y >> qa_report.txt
     - cat qa_report.txt
     - pylint_wrapper --pylint-report-path qa_report.txt raise-for-code
-    - mkdir reports/
+#    - mkdir reports/
     - cp qa_report.txt reports/
   artifacts:
     paths:
-      - reports/qa_report.txt
+#      - reports/qa_report.txt
 
 make_badges: # Only update when merged to main branches
   stage: release
@@ -101,7 +101,7 @@ make_badges: # Only update when merged to main branches
   script:
     - apt-get update
     - apt-get install git -y --no-install-recommends  # TODO: Remove when sns-manowrappers 1.1.0 is released
-    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
+#    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
     - echo ${QA}
     - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$PACKAGE').version)")
     - echo ${VERSION}
