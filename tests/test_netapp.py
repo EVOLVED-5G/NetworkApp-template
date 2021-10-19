@@ -1,4 +1,4 @@
 
 def test_netapp():
     message = "Test value is true"
-    assert True(message)
+    assert test_netapp() == True
