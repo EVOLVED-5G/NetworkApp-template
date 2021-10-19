@@ -7,7 +7,7 @@ variables:
 
 stages:
   - build
-  - adapt
+#  - adapt
   - tests
   - release
 
@@ -27,24 +27,24 @@ build_wheel:
       #- dist/*.whl
       - .env
 
-adapt_wheel:
-  image: quay.io/pypa/manylinux2014_x86_64 # https://github.com/pypa/auditwheel
-  stage: adapt
-  dependencies:
-    - build_wheel
-  only:
-    - develop
-    - master
-    - merge_requests
-  script:
-    #- auditwheel show dist/*
-    #- auditwheel repair dist/*
-    #- rm -f dist/*
-    #- cp wheelhouse/* dist/
-  artifacts:
-    paths:
-      #- dist/*.whl
-      - .env
+#adapt_wheel:
+#  image: quay.io/pypa/manylinux2014_x86_64 # https://github.com/pypa/auditwheel
+#  stage: adapt
+#  dependencies:
+#    - build_wheel
+#  only:
+#    - develop
+#    - master
+#    - merge_requests
+#  script:
+#    - auditwheel show dist/*
+#    - auditwheel repair dist/*
+#    - rm -f dist/*
+#    - cp wheelhouse/* dist/
+#  artifacts:
+#    paths:
+#      - dist/*.whl
+#      - .env
 
 test_functional:
   stage: tests
@@ -52,8 +52,8 @@ test_functional:
     - develop
     - master
     - merge_requests
-  dependencies:
-    - adapt_wheel
+#  dependencies:
+#    - adapt_wheel
   script:
     - echo "Installing template in develop mode for coverage purpose"
     - rm -f .env
@@ -71,8 +71,8 @@ test_functional:
 
 qa:
   stage: tests
-  dependencies:
-    - adapt_wheel
+#  dependencies:
+#    - adapt_wheel
   only:
     - develop
     - master
@@ -94,7 +94,7 @@ make_badges: # Only update when merged to main branches
   stage: release
   dependencies:
     - qa
-    - adapt_wheel
+#    - adapt_wheel
   only:
     - master
     - develop
