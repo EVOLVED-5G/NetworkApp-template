@@ -1,5 +1,5 @@
 
-def test_Netapp(self):
-    testValue= True
+def test_netapp(self):
+    testvalue = True
     message = "Test value is true"
-    self.assertTrue(testValue, message)
+    assert True(testvalue, message)
