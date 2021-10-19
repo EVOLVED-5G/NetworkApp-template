@@ -24,7 +24,7 @@ build_wheel:
     - pypi_wrapper build --cython --clean-dist
   artifacts:
     paths:
-      - dist/*.whl
+      #- dist/*.whl
       - .env
 
 adapt_wheel:
@@ -37,13 +37,13 @@ adapt_wheel:
     - master
     - merge_requests
   script:
-    - auditwheel show dist/*
-    - auditwheel repair dist/*
-    - rm -f dist/*
-    - cp wheelhouse/* dist/
+    #- auditwheel show dist/*
+    #- auditwheel repair dist/*
+    #- rm -f dist/*
+    #- cp wheelhouse/* dist/
   artifacts:
     paths:
-      - dist/*.whl
+      #- dist/*.whl
       - .env
 
 test_functional:
