@@ -113,5 +113,3 @@ make_badges: # Only update when merged to main branches
       - Coverage.svg
       - Version.svg
       - Pylint.svg
-
-
