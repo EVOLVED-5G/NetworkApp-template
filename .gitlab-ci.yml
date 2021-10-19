@@ -103,7 +103,7 @@ make_badges: # Only update when merged to main branches
     - apt-get install git -y --no-install-recommends  # TODO: Remove when sns-manowrappers 1.1.0 is released
 #    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
     - echo ${QA}
-    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$PACKAGE').version)")
+#    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$PACKAGE').version)")
     - echo ${VERSION}
     - gitlab_wrapper update-badge --url $GITLAB_URL --api-token ${API_TOKEN}
       --project-id ${CI_PROJECT_ID} --pipeline-id ${CI_PIPELINE_ID} --version ${VERSION} --version-badge-name Version
