@@ -2,12 +2,11 @@ image: registry.atosresearch.eu:18467/cython:3.8-slim-cicd
 
 variables:
   PACKAGE: template
-  JOB_WITH_COVERAGE: test_functional
+  JOB_WITH_COVERAGE: tests
   GITLAB_URL: https://scm.atosresearch.eu
 
 stages:
   - build
-#  - adapt
   - tests
   - release
 
@@ -24,36 +23,14 @@ build_wheel:
     - pypi_wrapper build --cython --clean-dist
   artifacts:
     paths:
-      #- dist/*.whl
       - .env
 
-#adapt_wheel:
-#  image: quay.io/pypa/manylinux2014_x86_64 # https://github.com/pypa/auditwheel
-#  stage: adapt
-#  dependencies:
-#    - build_wheel
-#  only:
-#    - develop
-#    - master
-#    - merge_requests
-#  script:
-#    - auditwheel show dist/*
-#    - auditwheel repair dist/*
-#    - rm -f dist/*
-#    - cp wheelhouse/* dist/
-#  artifacts:
-#    paths:
-#      - dist/*.whl
-#      - .env
-
-test_functional:
+tests:
   stage: tests
   only:
     - develop
     - master
     - merge_requests
-#  dependencies:
-#    - adapt_wheel
   script:
     - echo "Installing template in develop mode for coverage purpose"
     - rm -f .env
@@ -61,18 +38,16 @@ test_functional:
     - echo "USER_PASSWORD="$API_TOKEN >> .env  # To install sns.manowrappers from develop branch
     - apt-get update
     - apt-get install git -y --no-install-recommends  # TODO: Remove when sns-manowrappers 1.1.0 is released
-#    - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
-#   - cp -r htmlcov reports
+    - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
+    - cp -r htmlcov reports
   coverage: '/TOTAL.+?(\d+%)/'
 
   artifacts:
     paths:
-#      - reports/htmlcov
+      - reports/htmlcov
 
 qa:
   stage: tests
-#  dependencies:
-#    - adapt_wheel
   only:
     - develop
     - master
@@ -84,17 +59,16 @@ qa:
     - pylint $PACKAGE tests --exit-zero --reports y >> qa_report.txt
     - cat qa_report.txt
     - pylint_wrapper --pylint-report-path qa_report.txt raise-for-code
-#    - mkdir reports/
-#    - cp qa_report.txt reports/
+    - mkdir reports/
+    - cp qa_report.txt reports/
   artifacts:
     paths:
-#      - reports/qa_report.txt
+      - reports/qa_report.txt
 
 make_badges: # Only update when merged to main branches
   stage: release
   dependencies:
     - qa
-#    - adapt_wheel
   only:
     - master
     - develop
