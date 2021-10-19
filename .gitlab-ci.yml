@@ -85,7 +85,7 @@ qa:
     - cat qa_report.txt
     - pylint_wrapper --pylint-report-path qa_report.txt raise-for-code
 #    - mkdir reports/
-    - cp qa_report.txt reports/
+#    - cp qa_report.txt reports/
   artifacts:
     paths:
 #      - reports/qa_report.txt
