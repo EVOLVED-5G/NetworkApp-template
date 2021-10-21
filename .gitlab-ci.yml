@@ -1,7 +1,7 @@
 image: registry.atosresearch.eu:18467/cython:3.8-slim-cicd
 
 variables:
-  PACKAGE: template
+  PACKAGE: template/hooks
   JOB_WITH_COVERAGE: tests
   GITLAB_URL: https://scm.atosresearch.eu
 
