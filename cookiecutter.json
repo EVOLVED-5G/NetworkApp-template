@@ -1,21 +1,21 @@
 {
-  "git_email": "paula.encinar@atos.net",
+  "git_email": "Add your git email",
 
-  "repo_name": "MyNetApp",
-  "remote_username": "pencinarsanz-atos",
-  "token_repo": "your token",
+  "repo_name": "Add the name of your repository",
+  "remote_username": "Add your Git username",
+  "token_repo": "Add your Git token",
 
-  "add_collaborator": "yes",
-  "collaborator_permissions": "read",
-  "git_username_collaborator": "Paula-Encinar",
-  
-  "netapp_name": "example-netapp",
-  "netapp_namespace": "evolved5g",
-  "netapp_app": "example",
-  "netapp_container_name": "example-netapp",
-  "netapp_service": "example-netapp-service",
-  "netapp_service_app": "kubernetes_pod.example.metadata.0.labels.app",
-  "netapp_port": "8080",
-  "netapp_target_port": "8080"
+  "add_collaborator": "Choose yes or no ",
+  "collaborator_permissions": "Add the permission to your chosen collaborator",
+  "git_username_collaborator": "Add the username of your chosen contributor",
+
+  "netapp_name": "Add the NetApp name",
+  "netapp_namespace": "Add the NetApp namespace",
+  "netapp_app": "Add the NetApp app",
+  "netapp_container_name": "Choose the NetApp container",
+  "netapp_service": "Add the NetApp Service",
+  "netapp_service_app": "Add the NetApp service app",
+  "netapp_port": "Add the NetApp Port",
+  "netapp_target_port": "Add the NetApp target port"
 
 }
