@@ -73,18 +73,18 @@ make_badges: # Only update when merged to main branches
   script:
     - apt-get update
     - pip install dist/*   # Install from distribution to get version
-#    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
-#    - echo ${QA}
-#    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$WHEEL_NAME').version)")  # TODO: parse from dist/
-#    - echo ${VERSION}
-#    - gitlab_wrapper create-badge-file --url $GITLAB_URL --api-token ${API_TOKEN}
-#      --project-id ${CI_PROJECT_ID} --pipeline-id ${CI_PIPELINE_ID} --badge-key Coverage --file-name Coverage.svg --badge-colour COVERAGE
-#      --test-job-name $JOB_WITH_COVERAGE
-#    - gitlab_wrapper create-badge-file --badge-key Pylint --badge-value ${QA} --file-name Pylint.svg --badge-colour QA
-#    - gitlab_wrapper create-badge-file --badge-key Version --badge-value ${VERSION} --file-name Version.svg --badge-colour VERSION
+    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
+    - echo ${QA}
+    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$WHEEL_NAME').version)")  # TODO: parse from dist/
+    - echo ${VERSION}
+    - gitlab_wrapper create-badge-file --url $GITLAB_URL --api-token ${API_TOKEN}
+      --project-id ${CI_PROJECT_ID} --pipeline-id ${CI_PIPELINE_ID} --badge-key Coverage --file-name Coverage.svg --badge-colour COVERAGE
+      --test-job-name $JOB_WITH_COVERAGE
+    - gitlab_wrapper create-badge-file --badge-key Pylint --badge-value ${QA} --file-name Pylint.svg --badge-colour QA
+    - gitlab_wrapper create-badge-file --badge-key Version --badge-value ${VERSION} --file-name Version.svg --badge-colour VERSION
   artifacts:
     paths:
-#      - Coverage.svg
-#      - Version.svg
-#      - Pylint.svg
+      - Coverage.svg
+      - Version.svg
+      - Pylint.svg
 
