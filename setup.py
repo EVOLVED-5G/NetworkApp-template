@@ -22,7 +22,6 @@ setup(
     keywords='template',
     name='template',
     packages=find_packages(exclude=["tests"]),
-    test_suite='tests',
     url='https://github.com/EVOLVED-5G/template',
     version='1.0.0',
     zip_safe=False,
