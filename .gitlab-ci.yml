@@ -3,7 +3,7 @@ image: registry.atosresearch.eu:18467/cython:3.8-slim-cicd
 variables:
   PACKAGE: template
   WHEEL_NAME: template
-  JOB_WITH_COVERAGE: tests
+  JOB_WITH_COVERAGE: test_functional
   GITLAB_URL: https://scm.atosresearch.eu
 stages:
   - build
