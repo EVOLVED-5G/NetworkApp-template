@@ -1,0 +1,3 @@
+cookiecutter==1.7.3
+invoke==1.6.0
+requests==2.26.0
