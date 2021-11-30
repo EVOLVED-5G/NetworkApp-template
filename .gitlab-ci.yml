@@ -1,0 +1,89 @@
+image: registry.atosresearch.eu:18467/cython:3.8-slim-cicd
+
+variables:
+  PACKAGE: template/hooks
+#  WHEEL_NAME: sns.manowrappers
+  JOB_WITH_COVERAGE: tests
+  GITLAB_URL: https://scm.atosresearch.eu
+stages:
+  - build
+  - tests
+  - release
+
+build_wheel:
+  stage: build
+  only:
+    - master
+    - develop
+    - merge_requests
+  script:
+    - pypi_wrapper build --clean-dist
+  artifacts:
+    paths:
+      - dist/*.whl
+
+test_functional:
+  stage: tests
+  dependencies:
+    - build_wheel
+  only:
+    - master
+    - develop
+    - merge_requests
+  script:
+    - echo "Installing ${PACKAGE} in develop mode for coverage purpose"
+#    - pip install -e . --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD} # tests need to run in develop-mode installed to be able to read coverage
+    - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
+    - cp -r htmlcov reports
+  coverage: '/TOTAL.+?(\d+%)/'
+
+  artifacts:
+    paths:
+      - reports/htmlcov
+
+qa:
+  stage: tests
+  dependencies:
+    - build_wheel
+  only:
+    - master
+    - develop
+    - merge_requests
+  script:
+#   - pip install dist/* --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD}
+    # pylint will fail return non-zero even if only warnings are found
+    - pylint $PACKAGE tests --exit-zero --reports y >> qa_report.txt
+    - cat qa_report.txt
+    - pylint_wrapper --pylint-report-path qa_report.txt raise-for-code
+    - mkdir reports/
+    - cp qa_report.txt reports/
+  artifacts:
+    paths:
+      - reports/qa_report.txt
+
+make_badges: # Only update when merged to main branches
+  stage: release
+  dependencies:
+    - qa
+    - build_wheel
+  only:
+    - master
+    - develop
+    - merge_requests
+  script:
+#    - pip install dist/* --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD}  # Install from distribution to get version
+#    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
+#    - echo ${QA}
+#    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$WHEEL_NAME').version)")  # TODO: parse from dist/
+#    - echo ${VERSION}
+#    - gitlab_wrapper create-badge-file --url $GITLAB_URL --api-token ${API_TOKEN}
+#      --project-id ${CI_PROJECT_ID} --pipeline-id ${CI_PIPELINE_ID} --badge-key Coverage --file-name Coverage.svg --badge-colour COVERAGE
+#      --test-job-name $JOB_WITH_COVERAGE
+#    - gitlab_wrapper create-badge-file --badge-key Pylint --badge-value ${QA} --file-name Pylint.svg --badge-colour QA
+#    - gitlab_wrapper create-badge-file --badge-key Version --badge-value ${VERSION} --file-name Version.svg --badge-colour VERSION
+  artifacts:
+    paths:
+#      - Coverage.svg
+#      - Version.svg
+#      - Pylint.svg
+
