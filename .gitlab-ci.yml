@@ -1,7 +1,7 @@
 image: registry.atosresearch.eu:18467/cython:3.8-slim-cicd
 
 variables:
-  PACKAGE: template/hooks
+  PACKAGE: template
 #  WHEEL_NAME: sns.manowrappers
   JOB_WITH_COVERAGE: tests
   GITLAB_URL: https://scm.atosresearch.eu
@@ -32,7 +32,7 @@ test_functional:
     - merge_requests
   script:
     - echo "Installing ${PACKAGE} in develop mode for coverage purpose"
-#    - pip install -e . --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD} # tests need to run in develop-mode installed to be able to read coverage
+    - pip install -e .  # tests need to run in develop-mode installed to be able to read coverage
     - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
     - cp -r htmlcov reports
   coverage: '/TOTAL.+?(\d+%)/'
@@ -50,7 +50,7 @@ qa:
     - develop
     - merge_requests
   script:
-#   - pip install dist/* --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD}
+    - pip install dist/*
     # pylint will fail return non-zero even if only warnings are found
     - pylint $PACKAGE tests --exit-zero --reports y >> qa_report.txt
     - cat qa_report.txt
@@ -72,7 +72,7 @@ make_badges: # Only update when merged to main branches
     - merge_requests
   script:
     - apt-get update
-#    - pip install dist/* --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD}  # Install from distribution to get version
+    - pip install dist/*   # Install from distribution to get version
 #    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
 #    - echo ${QA}
 #    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$WHEEL_NAME').version)")  # TODO: parse from dist/
