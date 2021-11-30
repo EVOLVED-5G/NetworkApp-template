@@ -2,6 +2,7 @@ image: registry.atosresearch.eu:18467/cython:3.8-slim-cicd
 
 variables:
   PACKAGE: template
+  WHEEL_NAME: template
   JOB_WITH_COVERAGE: tests
   GITLAB_URL: https://scm.atosresearch.eu
 stages:
@@ -74,7 +75,7 @@ make_badges: # Only update when merged to main branches
     - pip install dist/*   # Install from distribution to get version
     - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
     - echo ${QA}
-    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$PACKAGE').version)")  # TODO: parse from dist/
+    - VERSION=$(python -c "import pkg_resources; print(pkg_resources.get_distribution('$WHEEL_NAME').version)")  # TODO: parse from dist/
     - echo ${VERSION}
     - gitlab_wrapper create-badge-file --url $GITLAB_URL --api-token ${API_TOKEN}
       --project-id ${CI_PROJECT_ID} --pipeline-id ${CI_PIPELINE_ID} --badge-key Coverage --file-name Coverage.svg --badge-colour COVERAGE
