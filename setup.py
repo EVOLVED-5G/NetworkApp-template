@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-
-"""The setup script."""
-
 from setuptools import setup, find_packages
 
 with open('README.md') as readme_file:
@@ -10,27 +6,22 @@ with open('README.md') as readme_file:
 with open('requirements.txt') as file:
     INSTALL_REQUIERES = file.read().splitlines()
 
-test_requirements = ['pytest>=3', ]
-
 setup(
-    author="EVOLVED5G project",
+    author="Paula Encinar",
     author_email='evolved5g@gmail.com',
     mainteiner='Paula Encinar',
     python_requires='>=3.8',
     description="Evolved5G NetApp Template ",
     entry_points={
-        'console_scripts': [
-            'evolved5g=evolved5g.cli:cli',
-            'cli_helper= evolved5g.cli:cli_helper',
-        ],
+        'console_scripts': []
     },
     install_requires=INSTALL_REQUIERES,
-    license="Apache Software License 2.0",
+    license="OSI Approved :: Apache Software License",
     long_description=README,
     include_package_data=True,
     keywords='template',
     name='template',
-    packages=find_packages(include=['template', 'template.*']),
+    packages=find_packages(exclude=["tests"]),
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/EVOLVED-5G/template',
