@@ -71,6 +71,7 @@ make_badges: # Only update when merged to main branches
     - develop
     - merge_requests
   script:
+    - apt-get update
 #    - pip install dist/* --extra-index-url ${NEXUS_PYPI_URL_DOWNLOAD}  # Install from distribution to get version
 #    - QA=$(pylint_wrapper --pylint-report-path reports/qa_report.txt get-qa-value | tail -1)
 #    - echo ${QA}
