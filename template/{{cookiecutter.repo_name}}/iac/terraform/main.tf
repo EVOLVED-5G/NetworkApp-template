@@ -1,7 +1,7 @@
 resource "kubernetes_pod" "{{cookiecutter.netapp_name}}" {
   metadata {
     name = "{{cookiecutter.netapp_name}}"
-    namespace = "{{cookiecutter.netapp_namespace}}"
+    namespace = "evolved5g"
     labels = {
       app = "{{cookiecutter.netapp_app}}"
     }
@@ -9,8 +9,8 @@ resource "kubernetes_pod" "{{cookiecutter.netapp_name}}" {
 
   spec {
     container {
-      image = "dockerhub.hi.inet/evolved-5g/{{cookiecutter.netapp_name}}:latest"
-      name  = "{{cookiecutter.netapp_container_name}}"
+      image = "dockerhub.hi.inet/evolved-5g/dummy-netapp:latest"
+      name  = "dummy-netapp"
     }
   }
 }
@@ -18,11 +18,11 @@ resource "kubernetes_pod" "{{cookiecutter.netapp_name}}" {
 resource "kubernetes_service" "{{cookiecutter.netapp_name}}_service" {
   metadata {
     name = "{{cookiecutter.netapp_service}}"
-    namespace = "{{cookiecutter.netapp_namespace}}"
+    namespace = "evolved5g"
   }
   spec {
     selector = {
-      app = {{cookiecutter.netapp_service_app}}
+      app = kubernetes_pod.{{cookiecutter.netapp_name}}.metadata.0.labels.app
     }
     port {
       port = {{cookiecutter.netapp_port}}
