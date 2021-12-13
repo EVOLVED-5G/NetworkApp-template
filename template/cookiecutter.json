@@ -10,11 +10,9 @@
   "git_username_collaborator": "Add the username of your chosen contributor",
 
   "netapp_name": "Add the NetApp name",
-  "netapp_namespace": "Add the NetApp namespace",
   "netapp_app": "Add the NetApp app",
   "netapp_container_name": "Choose the NetApp container",
   "netapp_service": "Add the NetApp Service",
-  "netapp_service_app": "Add the NetApp service app",
   "netapp_port": "Add the NetApp Port",
   "netapp_target_port": "Add the NetApp target port"
 
