@@ -1,1 +1,1 @@
-NetApp example
+NetApp example with NetApp template
