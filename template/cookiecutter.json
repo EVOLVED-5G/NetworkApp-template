@@ -5,13 +5,8 @@
   "remote_username": "Add your Git username",
   "token_repo": "Add your Git token",
 
-  "add_collaborator": "Choose yes or no ",
-  "collaborator_permissions": "Add the permission to your chosen collaborator",
-  "git_username_collaborator": "Add the username of your chosen contributor",
-
   "netapp_name": "Add the NetApp name",
   "netapp_app": "Add the NetApp app",
-  "netapp_container_name": "Choose the NetApp container",
   "netapp_service": "Add the NetApp Service",
   "netapp_port": "Add the NetApp Port",
   "netapp_target_port": "Add the NetApp target port"
