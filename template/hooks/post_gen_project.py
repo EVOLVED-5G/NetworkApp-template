@@ -13,11 +13,9 @@ class PostGenProjectHook(object):
     Post Project Generation Class Hook.
     """
     github_repos_url = "https://api.github.com/orgs/EVOLVED-5G/repos"
-    github_add_collaborator_url = " https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_name}}/collaborators/{{cookiecutter.git_username_collaborator}}"
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
     payload_create_repo = {"name": "{{cookiecutter.repo_name}}", "public": "true"}
-    payload_permission_collaborator = {"permissions": "{{cookiecutter.collaborator_permissions}}"}
     remote_message_base = "Also see: https://{}/{}/{}"
     success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\n"
     repo_dirpath = os.getcwd()
@@ -38,8 +36,6 @@ class PostGenProjectHook(object):
         self.make_dirs = self.result.get("make_dirs")
         self.remote_provider = "github.com"
         self.repo_name = self.result.get("repo_name")
-        self.add_collaborator = self.result.get("add_collaborator")
-        self.collaborator_permissions = self.result.get("collaborator_permissions")
         self.remote_message = (
             self.remote_message_base.format(
                 self.remote_provider, "EVOLVED-5G", self.repo_name
@@ -142,34 +138,11 @@ class PostGenProjectHook(object):
         self.git_checkout()
         self.git_push_evolved5g()
 
-    def add_collaborator_repo(self):
-        """
-        Add collaborator is optional
-        """
-        if self.add_collaborator == 'yes': 
-            response = requests.put(self.github_add_collaborator_url,headers=self.head)
-            response.raise_for_status()
-            payload = response.json()
-            X = json.dumps(payload)
-            print ("Contributor added",response)
-            invited_id = json.loads (X)
-            
-            git_id_invited_collaborator = invited_id['id']
-
-            if self.collaborator_permissions != 'write':
-                git_url_permission_collaborator = f"https://api.github.com/repos/EVOLVED-5G/{{cookiecutter.repo_name}}/invitations/{git_id_invited_collaborator}"
-                print(git_url_permission_collaborator)
-
-                response_permission = requests.patch (git_url_permission_collaborator, headers=self.head, json=self.payload_permission_collaborator)
-                print (response_permission)
-                print("Collaborator with permission of", self.collaborator_permissions)
-
     def run(self):
         """
         Sets up the project dirs, and git repo.
         """
         self.git_repo()
-        self.add_collaborator_repo()
         print(self.success_message)
 
 
