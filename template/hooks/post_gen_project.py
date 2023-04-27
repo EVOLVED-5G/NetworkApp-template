@@ -74,7 +74,7 @@ class PostGenProjectHook(object):
         """
         Runs git commit.
         """
-        command = "git commit -m \"Creation of a new NetApp {{cookiecutter.netapp_name}}\""
+        command = "git commit -m \"Creation of a new Network Application {{cookiecutter.repo_name}}\""
         run(command)
 
     @staticmethod
@@ -101,7 +101,7 @@ class PostGenProjectHook(object):
         """
         Adds the git remote origin url with included password.
         """
-        command = "git remote add origin git@github.com:EVOLVED-5G/{{cookiecutter.repo_name}}.git"
+        command = "git remote add origin git@github.com:EVOLVED-5G/{{cookiecutter.netapp_name}}.git"
         run(command)
 
     def git_push(self):
@@ -111,12 +111,19 @@ class PostGenProjectHook(object):
         command = "git push -u origin master"
         run(command)
 
-    def git_checkout(self):
+    def git_checkout_evolved5g(self):
         """
         create new branch about master
         """
         command = "git checkout -b evolved5g"
         run(command)
+
+    def git_checkout_example(self):
+        """
+        create new branch about master
+        """
+        command = "git checkout -b example"
+        run(command)        
 
     def git_push_evolved5g(self):
         """
@@ -124,6 +131,13 @@ class PostGenProjectHook(object):
         """
         command = "git push -u origin evolved5g"
         run(command)
+
+    def git_push_example(self):
+        """
+        Push branch evolved5g
+        """
+        command = "git push -u origin example"
+        run(command)  
 
     def git_repo(self):
         """
@@ -135,8 +149,9 @@ class PostGenProjectHook(object):
         self.git_create_remote_repo()
         self.git_remote_add()
         self.git_push()
-        self.git_checkout()
-        self.git_push_evolved5g()
+        self.git_checkout_evolved5g()
+        self.git_push_example()
+        self.git_push_example()        
 
     def run(self):
         """
