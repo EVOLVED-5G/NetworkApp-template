@@ -16,6 +16,7 @@ class PostGenProjectHook(object):
     git_my_token = "{{cookiecutter.token_repo}}" 
     head = {'Authorization': 'token {}'.format(git_my_token)}
     payload_create_repo = {"name": "{{cookiecutter.repo_name}}", "public": "true"}
+#    print (payload_create_repo)
     remote_message_base = "Also see: https://{}/{}/{}"
     success_message_base = "\n\nSuccess! Your project was created here:\n{}\n{}\n"
     repo_dirpath = os.getcwd()
@@ -26,6 +27,8 @@ class PostGenProjectHook(object):
         repo_dirpath, "{% raw %}{{cookiecutter.repo_name}}{% endraw %}"
     )
     hooks_dirpath = os.path.join(repo_dirpath, "hooks")
+#    print (repo_dirpath)
+#    print (hooks_dirpath)
 
     def __init__(self, *args, **kwargs):
         """
@@ -47,7 +50,7 @@ class PostGenProjectHook(object):
 
     def git_create_remote_repo(self):
         """
-        Creates a remote repo 
+        Creates a remote repo
         """
         r = requests.post(self.github_repos_url,headers=self.head, json=self.payload_create_repo)
         print("Repository created", r)
@@ -74,7 +77,16 @@ class PostGenProjectHook(object):
         """
         Runs git commit.
         """
+        print ("git_commit")
         command = "git commit -m \"Creation of a new Network Application {{cookiecutter.repo_name}}\""
+        run(command)
+
+    @staticmethod
+    def git_commit_orphan():
+        """
+        Runs git commit.
+        """
+        command = "git commit --allow-empty -m \"Creation of a evolved5g branch to develop the Network Application.\""
         run(command)
 
     @staticmethod
@@ -95,13 +107,15 @@ class PostGenProjectHook(object):
                     result[k] = v
                     if isinstance(v, list):
                         result[k] = v[0]
+        print (result)
+        print (result.get("make_dirs"))
         return result
 
     def git_remote_add(self):
         """
         Adds the git remote origin url with included password.
         """
-        command = "git remote add origin git@github.com:EVOLVED-5G/{{cookiecutter.netapp_name}}.git"
+        command = "git remote add origin git@github.com:EVOLVED-5G/{{cookiecutter.repo_name}}.git"
         run(command)
 
     def git_push(self):
@@ -111,19 +125,12 @@ class PostGenProjectHook(object):
         command = "git push -u origin master"
         run(command)
 
-    def git_checkout_evolved5g(self):
+    def git_switch_evolved5g(self):
         """
         create new branch about master
         """
-        command = "git checkout -b evolved5g"
+        command = "git switch --orphan evolved5g"
         run(command)
-
-    def git_checkout_example(self):
-        """
-        create new branch about master
-        """
-        command = "git checkout -b example"
-        run(command)        
 
     def git_push_evolved5g(self):
         """
@@ -132,12 +139,6 @@ class PostGenProjectHook(object):
         command = "git push -u origin evolved5g"
         run(command)
 
-    def git_push_example(self):
-        """
-        Push branch evolved5g
-        """
-        command = "git push -u origin example"
-        run(command)  
 
     def git_repo(self):
         """
@@ -149,9 +150,10 @@ class PostGenProjectHook(object):
         self.git_create_remote_repo()
         self.git_remote_add()
         self.git_push()
-        self.git_checkout_evolved5g()
-        self.git_push_example()
-        self.git_push_example()        
+        self.git_switch_evolved5g()
+        self.git_commit_orphan()
+        self.git_push_evolved5g()
+
 
     def run(self):
         """
