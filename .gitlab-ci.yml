@@ -5,15 +5,16 @@ variables:
   WHEEL_NAME: template
   JOB_WITH_COVERAGE: test_functional
   GITLAB_URL: https://scm.atosresearch.eu
-  SNS_REGISTRY_COMMON: registry.atosresearch.eu:18467
-  #SONAR_Project: tmt-smartnet-template
+  #SNS_REGISTRY_COMMON: registry.atosresearch.eu:18467
+  TMT_REGISTRY_COMMON: registry.atosresearch.eu:18488
+
 stages:
   - build
   - unit_functional_tests
   - release
 
 build_wheel:
-  image: $SNS_REGISTRY_COMMON/python:3.8-slim
+  image: $TMT_REGISTRY_COMMON/python:3.8-slim
   stage: build
   only:
     - master
@@ -30,7 +31,7 @@ build_wheel:
     - pip install -e .
 
 test_functional:
-  image: $SNS_REGISTRY_COMMON/python:3.8-slim
+  image: $TMT_REGISTRY_COMMON/python:3.8-slim
   stage: unit_functional_tests
   dependencies:
     - build_wheel
@@ -60,7 +61,7 @@ test_functional:
       - reports/htmlcov
 
 test_pylint:
-  image: $SNS_REGISTRY_COMMON/cython:3.8-cicd
+  image: $TMT_REGISTRY_COMMON/cython:3.8-cicd
   stage: unit_functional_tests
   dependencies:
     - build_wheel
@@ -86,7 +87,7 @@ test_pylint:
       - reports/qa_report.txt
 
 make_badges: # Only update when merged to main branches
-  image: $SNS_REGISTRY_COMMON/cython:3.8-cicd
+  image: $TMT_REGISTRY_COMMON/cython:3.8-cicd
   stage: release
   dependencies:
     - test_pylint
