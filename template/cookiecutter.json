@@ -3,12 +3,5 @@
 
   "repo_name": "Add the name of your repository",
   "remote_username": "Add your Git username",
-  "token_repo": "Add your Git token",
-
-  "netapp_name": "Add the NetApp name",
-  "netapp_app": "Add the NetApp app",
-  "netapp_service": "Add the NetApp Service",
-  "netapp_port": "Add the NetApp Port",
-  "netapp_target_port": "Add the NetApp target port"
-
+  "token_repo": "Add your Git token"
 }
