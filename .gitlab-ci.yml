@@ -50,7 +50,7 @@ test_functional:
     - echo "Installing ${PACKAGE} in develop mode for coverage purpose"
     
     - cat .env
-
+    - mkdir reports
     - pip install -e .  # tests need to run in develop-mode installed to be able to read coverage
     - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
     - cp -r htmlcov reports
