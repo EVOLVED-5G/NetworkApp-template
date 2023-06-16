@@ -1,4 +1,5 @@
 
+
 variables:
   PACKAGE: template
   WHEEL_NAME: template
@@ -6,7 +7,6 @@ variables:
   GITLAB_URL: https://scm.atosresearch.eu
   SNS_REGISTRY_COMMON: registry.atosresearch.eu:18467
   #SONAR_Project: tmt-smartnet-template
-
 stages:
   - build
   - unit_functional_tests
@@ -25,6 +25,8 @@ build_wheel:
     - echo "USER_NAME=gitlab-ci-token" >> .env
     - echo "This has been executed"
   script: # TODO: learn how to share venv
+  
+  
     - pip install -e .
 
 test_functional:
@@ -47,7 +49,7 @@ test_functional:
     - echo "Installing ${PACKAGE} in develop mode for coverage purpose"
     
     - cat .env
-	
+
     - pip install -e .  # tests need to run in develop-mode installed to be able to read coverage
     - pytest tests --cov=${PACKAGE} --cov-report html --cov-report term-missing
     - cp -r htmlcov reports
@@ -115,4 +117,5 @@ make_badges: # Only update when merged to main branches
       - Coverage.svg
       - Version.svg
       - Pylint.svg
+
 
